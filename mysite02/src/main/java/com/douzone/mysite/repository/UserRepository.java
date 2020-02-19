@@ -56,7 +56,7 @@ public class UserRepository {
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 
-			String url = "jdbc:mysql://127.0.0.1:3307/webdb";
+			String url = "jdbc:mysql://192.168.1.112:3307/webdb";
 			conn = DriverManager.getConnection(url, "webdb", "webdb");
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패:" + e);
