@@ -54,9 +54,9 @@ public class UserRepository {
 		Connection conn = null;
 
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("org.mariadb.jdbc.Driver");
 
-			String url = "jdbc:mysql://127.0.0.1:3306/webdb";
+			String url = "jdbc:mysql://127.0.0.1:3307/webdb";
 			conn = DriverManager.getConnection(url, "webdb", "webdb");
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패:" + e);
@@ -145,7 +145,7 @@ public class UserRepository {
 				String email = rs.getString(3);
 				String password = rs.getString(4);
 				String gender = rs.getString(5);
-				
+
 				userVo = new UserVo(); // 있으면 생성하니까 null이 안된다.
 
 				userVo.setNo(num);
@@ -175,7 +175,7 @@ public class UserRepository {
 		}
 		return userVo;
 	}
-	
+
 	public Boolean update(UserVo vo) {
 		Boolean result = false;
 		Connection conn = null;
@@ -184,18 +184,18 @@ public class UserRepository {
 		try {
 			conn = getConnection();
 
-			//update user set password = '1234', name = '김정석' where no = 1;  
+			// update user set password = '1234', name = '김정석' where no = 1;
 			String sql = "update user set name = ? ,password = ?, gender =? where no = ? ";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, vo.getName());
 			pstmt.setString(2, vo.getPassword());
 			pstmt.setString(3, vo.getGender());
-		
+
 			pstmt.setLong(4, vo.getNo());
-			
+
 			int count = pstmt.executeUpdate();
-			
+
 			result = count == 1;
 
 		} catch (SQLException e) {
