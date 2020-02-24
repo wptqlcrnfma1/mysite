@@ -12,7 +12,7 @@ import com.douzone.mysite.vo.GuestBookVo;
 
 
 
-public class Repository {
+public class GuestRepository {
 	public List<GuestBookVo> findAll(){
 		List<GuestBookVo> result = new ArrayList<GuestBookVo>();
 		
