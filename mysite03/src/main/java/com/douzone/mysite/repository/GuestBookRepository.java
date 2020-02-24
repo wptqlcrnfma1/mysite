@@ -8,11 +8,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.douzone.mysite.vo.GuestBookVo;
 
 
-
-public class GuestRepository {
+@Repository
+public class GuestBookRepository {
 	public List<GuestBookVo> findAll(){
 		List<GuestBookVo> result = new ArrayList<GuestBookVo>();
 		
@@ -79,17 +81,52 @@ public class GuestRepository {
 		
 		try {
 			conn = getConnection();
-
-			//insert into emaillist values (null, '김', '정석', 'zozfd@daum.net');
 			
-			String sql = "insert into guestbook values(null, ?, ?, ?,?)";
+			String sql = "insert into guestbook values(null, ?, ?, ?,now())";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, vo.getName());
 			pstmt.setString(2, vo.getContents());
 			pstmt.setString(3, vo.getPassword());
-			pstmt.setString(4, vo.getReg_date());
 			
+			int count = pstmt.executeUpdate();
+			
+			result = count == 1;
+			
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			//6. 자원정리
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;		
+	}
+	
+	
+	public Boolean delete(Long no, String password) {
+		Boolean result = false;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = getConnection();
+
+			String sql = "delete from guestbook where no = ? and password = ?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setLong(1, no);
+			pstmt.setString(2, password);
+	
 			int count = pstmt.executeUpdate();
 			
 			result = count == 1;
