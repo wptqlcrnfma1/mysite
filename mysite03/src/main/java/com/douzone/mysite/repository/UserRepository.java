@@ -121,7 +121,7 @@ public class UserRepository {
 		return userVo;
 	}
 
-	public UserVo findByNo(Long no) {
+	public UserVo findByNo(Long no) { //User inform update
 
 		UserVo userVo = null;
 

@@ -21,7 +21,7 @@
 				<p class="jr-success">
 					정보가 갱신되었습니다. <br>
 					<br> <a
-						href="${pageContext.request.contextPath}/user?a=loginform">로그인하기</a>
+						href="${pageContext.request.contextPath}/user/login">로그인하기</a>
 				</p>
 			</div>
 		</div>

@@ -21,7 +21,7 @@
 			<div id="user">
 
 				<form id="join-form" name="joinForm" method="post"
-					action="${pageContext.request.contextPath}/user">
+					action="${pageContext.request.contextPath}/user/update">
 					<input type='hidden' name='a' value='update' /> <input
 						type='hidden' name='no' value="${userVo.no }" /> <label
 						class="block-label" for="name">이름</label> <input id="name"
@@ -35,7 +35,7 @@
 					<fieldset>
 						<legend>성별</legend>
 						<c:choose>
-							<c:when test="${userVo.gender }">
+							<c:when test='${userVo.gender == "female" }'>
 								<label>여</label>
 								<input type="radio" name="gender" value="female"
 									checked="checked">

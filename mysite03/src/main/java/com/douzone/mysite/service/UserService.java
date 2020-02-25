@@ -21,5 +21,13 @@ public class UserService {
 		return userRepository.findByEmailAndPassword(vo);
 	}
 
+	public UserVo getUser(Long no) {
+		return userRepository.findByNo(no); //사용자 정보 찾기
+	}
+
+	public Boolean update(UserVo vo) {
+		boolean count = userRepository.update(vo);
+		return count == true;
+	}
 	
 }
