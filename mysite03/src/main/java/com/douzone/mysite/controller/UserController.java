@@ -5,9 +5,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.douzone.mysite.service.UserService;
 import com.douzone.mysite.vo.UserVo;
@@ -84,7 +86,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String update(HttpSession session, UserVo userVo) {
+	public String update(HttpSession session, UserVo userVo, @RequestParam("no") Long no,@RequestParam("password") String password, Model model) {
 
 		///////////////////////////// 접근제어//////////////////////////////////////
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
@@ -93,9 +95,24 @@ public class UserController {
 		}
 		////////////////////////////////////////////////////////////////////
 		
+		UserVo voPass = userService.getPassword(no);
+		
+		if(voPass.getPassword().equals(password)) {
+			
+			System.out.println("기존의 비밀번호와 동일합니다.");
+			return "redirect:/user/update";
+		}
+		
+		if(password.equals("")) {
+			System.out.println("비밀번호를 입력하세요");
+			return "redirect:/user/update";
+		}
 		userService.update(userVo);
-		System.out.println(userVo);
 		return "user/updatesuccess";
 	}
-
+	
+	@ExceptionHandler(Exception.class) //모든 exception은 이쪽으로 받겠다.
+	public String handleException() {
+		return "error/exception";
+	}
 }

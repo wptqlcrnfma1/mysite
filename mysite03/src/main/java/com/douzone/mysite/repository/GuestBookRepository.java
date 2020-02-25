@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.douzone.mysite.exception.GuestBookRepositoryException;
 import com.douzone.mysite.vo.GuestBookVo;
 
 
@@ -51,7 +52,7 @@ public class GuestBookRepository {
 			}
 			
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			throw new GuestBookRepositoryException(e.getMessage());
 		} finally {
 			//6. 자원정리
 			try {
@@ -94,7 +95,7 @@ public class GuestBookRepository {
 			result = count == 1;
 			
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			throw new GuestBookRepositoryException(e.getMessage());
 		} finally {
 			//6. 자원정리
 			try {
@@ -132,7 +133,7 @@ public class GuestBookRepository {
 			result = count == 1;
 			
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			throw new GuestBookRepositoryException(e.getMessage());
 		} finally {
 			//6. 자원정리
 			try {
@@ -158,8 +159,6 @@ public class GuestBookRepository {
 		try {
 			conn = getConnection();
 
-			//insert into emaillist values (null, '김', '정석', 'zozfd@daum.net');
-	
 			String sql = "delete from guestbook where no = ? and password = ?";
 			pstmt = conn.prepareStatement(sql);
 			
@@ -171,7 +170,7 @@ public class GuestBookRepository {
 			result = count == 1;
 			
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			throw new GuestBookRepositoryException(e.getMessage());
 		} finally {
 			//6. 자원정리
 			try {
@@ -199,7 +198,7 @@ public class GuestBookRepository {
 			String url = "jdbc:mysql://192.168.1.112:3307/webdb";
 			conn = DriverManager.getConnection(url, "webdb", "webdb");
 		} catch (ClassNotFoundException e) {
-			System.out.println("드라이버 로딩 실패:" + e);
+			throw new GuestBookRepositoryException("드라이버 로딩 실패:" + e);	
 		}
 
 		return conn;

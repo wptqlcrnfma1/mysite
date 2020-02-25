@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import org.springframework.stereotype.Repository;
 
+import com.douzone.mysite.exception.UserRepositoryException;
 import com.douzone.mysite.vo.UserVo;
 
 @Repository
@@ -34,7 +35,7 @@ public class UserRepository {
 			result = count == 1;
 
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			throw new UserRepositoryException("errer :" + e);
 		} finally {
 			// 6. 자원정리
 			try {
@@ -52,21 +53,7 @@ public class UserRepository {
 		return result;
 	}
 
-	private Connection getConnection() throws SQLException {
-		Connection conn = null;
 
-		try {
-			Class.forName("org.mariadb.jdbc.Driver");
-
-			String url = "jdbc:mysql://192.168.1.112:3307/webdb";
-			conn = DriverManager.getConnection(url, "webdb", "webdb");
-		} catch (ClassNotFoundException e) {
-			System.out.println("드라이버 로딩 실패:" + e);
-		}
-
-		return conn;
-
-	}
 
 	public UserVo findByEmailAndPassword(UserVo vo) {
 		UserVo userVo = null;
@@ -100,7 +87,7 @@ public class UserRepository {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			throw new UserRepositoryException("errer :" + e);
 		} finally {
 			// 6. 자원정리
 			try {
@@ -158,7 +145,58 @@ public class UserRepository {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			throw new UserRepositoryException("errer :" + e);
+		} finally {
+			// 6. 자원정리
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return userVo;
+	}
+	
+	public UserVo comparePassword(Long no) { //User inform update
+
+		UserVo userVo = null;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = getConnection();
+
+			String sql = "select password from user where no = ?";
+			pstmt = conn.prepareStatement(sql);
+
+			// binding 작업
+			pstmt.setLong(1, no);
+
+			rs = pstmt.executeQuery();
+
+			// 5. 결과 가져오기
+			if (rs.next()) {
+				String password = rs.getString(1);
+	
+
+				userVo = new UserVo(); // 있으면 생성하니까 null이 안된다.
+	
+				userVo.setPassword(password);
+		
+			}
+
+		} catch (SQLException e) {
+			throw new UserRepositoryException("errer :" + e);
 		} finally {
 			// 6. 자원정리
 			try {
@@ -186,7 +224,6 @@ public class UserRepository {
 		try {
 			conn = getConnection();
 
-			// update user set password = '1234', name = '김정석' where no = 1;
 			String sql = "update user set name = ? ,password = ?, gender =? where no = ? ";
 			pstmt = conn.prepareStatement(sql);
 
@@ -201,7 +238,7 @@ public class UserRepository {
 			result = count == 1;
 
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			throw new UserRepositoryException("errer :" + e);
 		} finally {
 			// 6. 자원정리
 			try {
@@ -217,5 +254,21 @@ public class UserRepository {
 		}
 
 		return result;
+	}
+	
+	private Connection getConnection() throws SQLException {
+		Connection conn = null;
+
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+
+			String url = "jdbc:mysql://192.168.1.112:3307/webdb";
+			conn = DriverManager.getConnection(url, "webdb", "webdb");
+		} catch (ClassNotFoundException e) {
+			throw new UserRepositoryException("드라이버 로딩 실패:" + e);
+		}
+
+		return conn;
+
 	}
 }

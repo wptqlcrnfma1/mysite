@@ -30,4 +30,8 @@ public class UserService {
 		return count == true;
 	}
 	
+	public UserVo getPassword(Long no) {
+		return userRepository.comparePassword(no);
+	}
+	
 }
