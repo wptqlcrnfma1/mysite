@@ -23,13 +23,13 @@ public class GuestBookService {
 	}
 	
 	
-	public boolean insert(GuestBookVo vo) {
-		boolean count = guestbookRepository.insert(vo);
-		return count == true;
+	public int insert(GuestBookVo vo) {
+		int count = guestbookRepository.insert(vo);
+		return count;
 	}
 	
 	public String delete(Long no, String password) {
-		guestbookRepository.delete(no,password);
+		guestbookRepository.deleteMap(no,password);
 		
 		return "redirect:/";
 	}

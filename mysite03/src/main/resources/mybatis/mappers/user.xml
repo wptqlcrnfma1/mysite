@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user">
+	<insert id="insert" parameterType="uservo">
+
+		<![CDATA[
+			insert
+ 			into user
+  			values(null, #{name}, #{email}, #{password}, #{gender},now())
+		]]>
+
+	</insert>
+
+	<select id="findByEmailAndPassword" parameterType="uservo" resultType="uservo">
+		<![CDATA[
+		select no, name 
+			from user 
+			where email = #{email} and password = #{password}  
+			order by no desc
+		]]>
+	</select>
+	
+	<select id="findByEmailAndPassword2" parameterType="map" resultType="uservo">
+		<![CDATA[
+		select no, name 
+			from user 
+			where email = #{e} and password = #{p}  
+			order by no desc
+		]]>
+	</select>
+	
+	<!-- #{no}의 경우 파라미터 이름을 안에 아무거나 적어도 된다. -->
+	<select id="findByNo" parameterType="Long" resultType="uservo">
+	<![CDATA[
+		select no, name, email, password, gender from user where no = #{no}
+	]]>
+	</select>
+	
+	<select id="comparePassword" parameterType="Long" resultType="uservo">
+	<![CDATA[
+		select password from user where no = #{no}
+	]]>
+	</select>
+	
+	<update id = "update" parameterType="uservo"> <!-- 동적쿼리 password부분 -->		
+			<choose>
+				<when test='password != ""'>
+				<![CDATA[
+				update user
+				set name = #{name},	
+				   password = #{password},
+				   gender = #{gender}
+				where no = #{no}
+				]]>
+				</when>
+				
+				<otherwise>
+				<![CDATA[
+				update user
+				set name = #{name},
+				   gender = #{gender}
+				where no = #{no}	
+				]]>
+				</otherwise>
+			</choose>
+			
+			
+			
+			
+			
+	
+	</update>
+		
+	<update id="update2" parameterType="Long">
+	<![CDATA[
+		update user set name = #{name} ,password = #{password}, gender =#{gender} where no = #{no}
+	]]>
+	</update>
+
+</mapper>

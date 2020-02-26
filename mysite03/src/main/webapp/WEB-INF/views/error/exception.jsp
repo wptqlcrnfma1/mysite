@@ -8,9 +8,8 @@
 </head>
 <body>
 <h1>Exception Occurs</h1>
-	<p>
-		예외발생!!!(개발자가 보는 page)<br>
-		고쳐라
-	</p>
+	<pre style = "color:red">
+		${exception }
+	</pre>
 </body>
 </html>

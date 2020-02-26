@@ -44,7 +44,7 @@
 							items="${list }" var="vo" varStatus='status'>
 							<table width=510 border=1>
 								<tr>
-									<td>${listCount-status.index}</td>
+									<td>[${listCount-status.index}]</td>
 									<td>${vo.name}</td>
 									<td>${vo.reg_date}</td>
 									<td><a

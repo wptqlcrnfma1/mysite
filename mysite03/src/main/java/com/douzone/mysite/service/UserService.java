@@ -12,9 +12,9 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	public boolean join(UserVo vo) {
-		boolean count = userRepository.insert(vo);
-		return count == true;
+	public int join(UserVo vo) {
+		int count = userRepository.insert(vo);
+		return count;
 	}
 
 	public UserVo getUser(UserVo vo) {
@@ -25,9 +25,9 @@ public class UserService {
 		return userRepository.findByNo(no); //사용자 정보 찾기
 	}
 
-	public Boolean update(UserVo vo) {
-		boolean count = userRepository.update(vo);
-		return count == true;
+	public int update(UserVo vo) {
+		int count = userRepository.update(vo);
+		return count;
 	}
 	
 	public UserVo getPassword(Long no) {
