@@ -94,7 +94,7 @@ public class UserController {
 		}
 		////////////////////////////////////////////////////////////////////
 		
-		/*
+		
 		UserVo voPass = userService.getPassword(no);
 		if(voPass.getPassword().equals(password)) {
 			return "redirect:/user/update";
@@ -103,7 +103,7 @@ public class UserController {
 		if(password.equals("")) {
 			return "redirect:/user/update";
 		}
-		*/
+		
 		userVo.setNo(authUser.getNo());
 		userService.update(userVo);
 		

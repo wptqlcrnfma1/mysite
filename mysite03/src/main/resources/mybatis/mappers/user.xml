@@ -45,6 +45,7 @@
 	
 	<update id = "update" parameterType="uservo"> <!-- 동적쿼리 password부분 -->		
 			<choose>
+			 <!-- UserController에서 공백을 막았기때문에 지금은 사용되지 않지만 참고 -->
 				<when test='password != ""'>
 				<![CDATA[
 				update user
