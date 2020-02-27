@@ -21,30 +21,30 @@
 					</tr>
 					<tr>
 						<td class="label">제목</td>
-						<td>${vo.title }</td>
+						<td>${boardVo.title }</td>
 					</tr>
 					<tr>
 						<td class="label">내용</td>
 						<td>
-							<div class="view-content">${vo.contents }</div>
+							<div class="view-content">
+							${fn:replace(boardVo.contents, newLine, "<br>") }					
+							</div>
 						</td>
 					</tr>
 				</table>
-
 				<div class="bottom">
-					<a href="${pageContext.request.contextPath}/board?a=list">글목록</a>
-					 <a href="${pageContext.request.contextPath}/board?a=reply&no=${vo.no}">댓글작성</a>
-					 
-					 <c:set var = "authName" value = "${authUser.name}" scope="session"/>
-						<c:set var = "userName" value = "${vo.userName}" scope="session"/>
-					 <c:if test="${authName eq userName}">
-					  <a href="${pageContext.request.contextPath}/board?a=modify&no=${vo.no}">글수정</a>
+					<a href="${pageContext.request.contextPath }/board?p=${param.p }&kwd=${param.kwd }">글목록</a>
+					<c:if test="${ not empty authUser }">
+						<a href="${pageContext.request.contextPath }/board/reply/${boardVo.no }?p=${param.p }&kwd=${param.kwd }">답글 달기</a>
+						<c:if test="${authUser.no == boardVo.userNo }">
+							<a href="${pageContext.request.contextPath }/board/modify/${boardVo.no }?p=${param.p }&kwd=${param.kwd }">글수정</a>
+						</c:if>
 					</c:if>
 				</div>
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp">
-			<c:param name="menu" value="board" />
+			<c:param name="menu" value="board"/>
 		</c:import>
 		<c:import url="/WEB-INF/views/includes/footer.jsp" />
 	</div>

@@ -29,7 +29,7 @@ public class BoardReplyView implements Action {
 		
 		String no = request.getParameter("no");
 		Long no1 = Long.parseLong(no);
-
+		
 		
 		BoardVo vo = new BoardRepository().findReplyNumbers(no1);
 	

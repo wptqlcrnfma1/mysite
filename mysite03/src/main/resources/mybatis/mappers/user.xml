@@ -7,14 +7,14 @@
 		<![CDATA[
 			insert
  			into user
-  			values(null, #{name}, #{email}, #{password}, #{gender},now())
+  			values(null, #{name}, #{email}, #{password}, #{gender},now(), "USER")
 		]]>
 
 	</insert>
 
 	<select id="findByEmailAndPassword" parameterType="uservo" resultType="uservo">
 		<![CDATA[
-		select no, name 
+		select no, name, role
 			from user 
 			where email = #{email} and password = #{password}  
 			order by no desc
@@ -36,6 +36,8 @@
 		select no, name, email, password, gender from user where no = #{no}
 	]]>
 	</select>
+	
+	
 	
 	<select id="comparePassword" parameterType="Long" resultType="uservo">
 	<![CDATA[
@@ -65,18 +67,5 @@
 				]]>
 				</otherwise>
 			</choose>
-			
-			
-			
-			
-			
-	
 	</update>
-		
-	<update id="update2" parameterType="Long">
-	<![CDATA[
-		update user set name = #{name} ,password = #{password}, gender =#{gender} where no = #{no}
-	]]>
-	</update>
-
 </mapper>

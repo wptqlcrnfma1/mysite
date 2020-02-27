@@ -8,10 +8,17 @@
 			select no, name, contents, password, reg_date from guestbook order by no desc
 		]]>
 	</select>
-	
-	<select id="findAll2" parameterType="map" resultType="guestbookvo">
+	<!-- 동적쿼리가 아닐때는 #{asdasda}(아무 값)을 써도 상관없지만  -->
+	<!-- 동적쿼리에서 조건절을 쓸때 객체가 넘어오면 #{속성필드}는 상관없지만 객체가 아닌 값이 넘어올때는 _parameter를 꼭 쓴다. -->
+	<select id="findAll2" parameterType="guestbookvo" resultType="Long">
 		<![CDATA[
-			select no, name, contents, password, reg_date from guestbook order by no desc
+			select no, name, contents, password, reg_date
+			 from guestbook 
+			 <if test='_parameter>0'>
+			where no < #{_parameter}
+			</if>
+			order by no desc
+			limit 0,3
 		]]>
 	</select>
 	
