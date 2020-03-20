@@ -1,8 +1,12 @@
 package com.douzone.mysite.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,12 +25,25 @@ public class UserController {
 	private UserService userService;
 
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
-	public String join() {
+	public String join(@ModelAttribute UserVo vo) { //modelAttribute로 받지는 않지만 보내줘야한다. 자동으로 JSP에 UserVo를 보내준다.
 		return "user/join";
 	}
 
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public String join(UserVo vo) {
+	public String join(@ModelAttribute @Valid UserVo vo, BindingResult result, Model model) {
+		//@ModelAttribute @Valid UserVo vo는 회원가입 실패해도 text유지하기 위해
+		//소문자 uservo 객체가 jsp로 넘어간다.
+		
+		
+		//에러의 경우 jsp에서 처리 콘솔을 파싱해서 내용을 jsp로 돌려주는건 힘들다.
+		if(result.hasErrors()) {
+//			List<ObjectError> list = result.getAllErrors();
+//			for(ObjectError error:list) {
+//				System.out.println(error);
+//			}
+			model.addAllAttributes(result.getModel()); //map으로 return된다 jsp로 간다 > 스프링 태그를 사용해서 jsp에서 처리하도록
+			return "user/join";
+		}
 		userService.join(vo);
 		return "redirect:/user/joinsuccess";
 	}
