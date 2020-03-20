@@ -5,7 +5,7 @@
 	
 	<select id="findAll" parameterType="list" resultType="guestbookvo">
 		<![CDATA[
-			select noasdasdasdasd name, contents, password, reg_date from guestbook order by no desc
+			select no, name, contents, password, reg_date from guestbook order by no desc
 		]]>
 	</select>
 	<!-- 동적쿼리가 아닐때는 #{asdasda}(아무 값)을 써도 상관없지만  -->

@@ -20,5 +20,4 @@ public class LogoutInterceptor extends HandlerInterceptorAdapter{
 		
 		return false;
 	}
-
 }

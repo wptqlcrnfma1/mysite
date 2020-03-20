@@ -13,7 +13,6 @@ import com.douzone.mysite.vo.SiteVo;
 @Controller
 public class MainController {
 	
-	
 	@Autowired
 	private SiteService siteService;
 	

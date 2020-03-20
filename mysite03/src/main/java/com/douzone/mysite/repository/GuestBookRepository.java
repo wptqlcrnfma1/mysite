@@ -22,6 +22,7 @@ public class GuestBookRepository {
 	
 	public List<GuestBookVo> findAll(){
 		List<GuestBookVo> result = new ArrayList<GuestBookVo>();
+		
 		return sqlSession.selectList("guestbook.findAll" , result);
 	}
 	
