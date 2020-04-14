@@ -37,7 +37,12 @@
 	]]>
 	</select>
 	
-	
+
+	<select id="findByEmail" parameterType="String" resultType="uservo">
+	<![CDATA[
+		select no from user where email = #{email}
+	]]>
+	</select>
 	
 	<select id="comparePassword" parameterType="Long" resultType="uservo">
 	<![CDATA[

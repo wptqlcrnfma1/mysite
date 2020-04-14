@@ -33,5 +33,10 @@ public class UserService {
 	public UserVo getPassword(Long no) {
 		return userRepository.comparePassword(no);
 	}
+
+	public boolean existUser(String email) {
+		
+		return userRepository.find(email) != null;
+	}
 	
 }
