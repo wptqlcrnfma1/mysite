@@ -8,6 +8,15 @@ public class GuestBookVo {
 	private String password;
 	private String reg_date;
 	
+	public GuestBookVo() {
+		
+	}
+	
+	public GuestBookVo(Long no, String password) {
+		this.no = no;
+		this.password =password;
+	}
+	
 	public Long getNo() {
 		return no;
 	}
