@@ -34,6 +34,7 @@ public class AdminController {
 			Model model) {
 		
 		String profile = siteService.restore(multipartFile);
+		System.out.println("profile : "+  profile);
 		siteVo.setProfile(profile);
 		
 		siteService.update(siteVo);

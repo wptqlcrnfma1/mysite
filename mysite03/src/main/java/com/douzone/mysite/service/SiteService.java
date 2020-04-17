@@ -69,6 +69,7 @@ public class SiteService {
 			throw new RuntimeException("file upload error : " + e); //나중에 mysite적용할때는 fileuploadException 만들어서 던져야 한다.
 		}
 		
+		System.out.println("url = " + url);
 		return url;
 
 	}
