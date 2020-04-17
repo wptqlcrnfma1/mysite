@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
@@ -50,7 +51,7 @@ $(function(){
 			$("#agree-prov").focus();
 			return;
 		}		
-	
+		
 		this.submit();
 	});
 	
@@ -62,7 +63,9 @@ $(function(){
 	});
 	
 	$("#btn-checkemail").click(function(){
-
+		
+		
+		
 		var email = $("#email").val();
 		
 		if(email == ''){
@@ -83,12 +86,14 @@ $(function(){
 				}
 				
 				if(response.data == true){
+					console.log(response);
 					alert('존재하는 이메일입니다.');
 					$("#email")
 						.val('')
 						.focus();
 					return;
 				}
+				
 				
 				$('#btn-checkemail').hide();
 				$('#img-checkemail').show();			
@@ -108,12 +113,10 @@ $(function(){
 		<div id="content">
 			<div id="user">
 
-				<form:form modelAttribute="userVo" id="join-form" name="joinForm"
-					method="post" action="${pageContext.request.contextPath}/user/join">
+				<form:form modelAttribute="userVo" id="join-form" name="joinForm" method="post" action="${pageContext.request.contextPath}/user/join">
 					<label class="block-label" for="name">이름</label>
 					<form:input path="name" />
-					<p
-						style="font-weight: bold; color: #f00; text-align: left; padding-left: 0">
+					<p style="font-weight: bold; color: #f00; text-align: left; padding-left: 0">
 						<spring:hasBindErrors name="userVo">
 							<c:if test='${errors.hasFieldErrors("name") }'>
 								<spring:message code='${errors.getFieldError("name").codes[0] }' />

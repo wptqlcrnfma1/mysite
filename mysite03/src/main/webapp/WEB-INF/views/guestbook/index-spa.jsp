@@ -9,11 +9,10 @@
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/guestbook-spa.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-3.4.1.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/ejs/ejs.js"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-3.4.1.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/ejs/ejs.js"></script>
 <script>
 var startNo = 0;
 var isEnd = false;
@@ -39,10 +38,8 @@ var messageBox = function(title, message, callback){
 				}
 			},
 			close: callback
-			
 		});
 }
-
 
 var render = function(vo,mode){
 	var html = "<li data-no='" + vo.no + "'>" +
@@ -87,17 +84,17 @@ var fetchList = function(){
 			}
 			
 			
-			//기존랜더링에서 템플릿 사용
+			//기존랜더링에서 템플릿 사용 91~92 line
 // 			$.each(response.data, function(index, vo){
 // 				render(vo);
 // 			}); 
-			
 			var html = listTemplate.render(response);
+			
 			$("#list-guestbook").append(html);
 			
 			
 			 //찾으면 유사배열이 나온다. last를 쓰면 마지막 li가 나온다 마지막 data의 no를 찾는다. 없으면 0 return
-			startNo = $('#list-guestbook li').last().data('no') || 0;
+			startNo = $('#list-guestbook li').last().data('no') || 0; //no는 vo의 no
 			
 		},
 		error: function(xhr, status, e){
@@ -262,33 +259,32 @@ var fetchList = function(){
 		fetchList();
 	});
 	
+	
+	/* jquery plugin */
+	 
+	(function($){
+		$.fn.hello = function(){
+			console.log(this.length);
+			console.log("hello #" + this.attr('title'));
+		}
+	})(jQuery);
+	(function($){
+		$.fn.flash = function(){
+			var $that = $(this);
+			var isBlink = false;
+			setInterval(function(){
+				$that.css("backgroundColor",  isBlink ? "#f00" : "#aaa");
+				isBlink = !isBlink;
+			}, 1000);
+		}
+	})(jQuery);
+
+	//jquery plugin test
+	$(".btn-fetch").hello();
+	$(".btn-fetch").flash();
 </script>
 
-<script>
 
-/* jquery plugin */
- 
-(function($){
-	$.fn.hello = function(){
-		console.log(this.length);
-		console.log("hello #" + this.attr('title'));
-	}
-})(jQuery);
-(function($){
-	$.fn.flash = function(){
-		var $that = $(this);
-		var isBlink = false;
-		setInterval(function(){
-			$that.css("backgroundColor",  isBlink ? "#f00" : "#aaa");
-			isBlink = !isBlink;
-		}, 1000);
-	}
-})(jQuery);
-
-//jquery plugin test
-$(".btn-fetch").hello();
-$(".btn-fetch").flash();
-</script>
 </head>
 <body>
 	<div id="container">
@@ -296,9 +292,10 @@ $(".btn-fetch").flash();
 		<div id="content">
 			<div id="guestbook">
 				<h1>방명록</h1>
+				
 				<form id="add-form" action="" method="post">
-					<input type="text" id="input-name" placeholder="이름"> <input
-						type="password" id="input-password" placeholder="비밀번호">
+					<input type="text" id="input-name" placeholder="이름">
+					<input type="password" id="input-password" placeholder="비밀번호">
 					<textarea id="tx-content" placeholder="내용을 입력해 주세요."></textarea>
 					<input type="submit" value="보내기" />
 				</form>
@@ -307,20 +304,18 @@ $(".btn-fetch").flash();
 					<button class='btn-fetch'>다음 가져오기</button>
 				</div>
 
-				<ul id="list-guestbook">
-				</ul>
+				<ul id="list-guestbook"></ul>
 
 				<div style='margin: 20px 0 0 0'>
 					<button class='btn-fetch'>다음 가져오기</button>
 				</div>
-
 			</div>
+			
 			<div id="dialog-delete-form" class="delete-form" title="메세지 삭제" style="display: none">
 				<p class="validateTips normal">작성시 입력했던 비밀번호를 입력하세요.</p>
 				<p class="validateTips error" style="display: none">비밀번호가 틀립니다.</p>
 				<form>
-					<input type="password" id="password-delete" value=""
-						class="text ui-widget-content ui-corner-all">
+					<input type="password" id="password-delete" value="" class="text ui-widget-content ui-corner-all">
 						<input type="hidden" id="hidden-no" value="">
 						<input type="submit" tabindex="-1" style="position: absolute; top: -1000px">
 				</form>
