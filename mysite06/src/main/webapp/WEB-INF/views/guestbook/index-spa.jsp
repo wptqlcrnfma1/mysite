@@ -94,9 +94,8 @@ var fetchList = function(){
 			
 			
 			 //찾으면 유사배열이 나온다. last를 쓰면 마지막 li가 나온다 마지막 data의 no를 찾는다. 없으면 0 return
-			
 			startNo = $('#list-guestbook li').last().data('no') || 0; //no는 vo의 no
-
+			
 		},
 		error: function(xhr, status, e){
 			console.error(status + ":" + e);

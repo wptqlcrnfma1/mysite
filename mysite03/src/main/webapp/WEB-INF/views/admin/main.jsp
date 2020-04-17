@@ -19,7 +19,7 @@
 						<label class="block-label" for="title">사이트 타이틀</label>
 						<input id="title" name="title" type="text" value="${siteVo.title }">
 						
-						<label class="block-label" for="welcomeMessage">환영 메세지</label>
+						<label class="block-label" for="welcomeMessage">환영 메세지${siteVo.profile }</label>
 						<input id="welcomeMessage" name="welcomeMessage" type="text" value="${siteVo.welcomeMessage }">
 
 						<label class="block-label">프로필 이미지</label>

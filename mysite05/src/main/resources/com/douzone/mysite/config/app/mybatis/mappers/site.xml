@@ -5,7 +5,7 @@
 
 <select id="select"  resultType="sitevo">
 <![CDATA[
-		select no, title, welcome_message as welcomeMessage, profile, description from site where no = 5
+		select no, title, welcome_message as welcomeMessage, profile, description from site where no = 1
 	]]>	
 </select>
 
@@ -16,7 +16,7 @@
 		       welcome_message=#{welcomeMessage },
 		       profile=#{profile },
 		       description=#{description }
-		       where no=5
+		       where no=1
 ]]>	
 </update>
 

@@ -39,6 +39,14 @@ public class GuestBookRepository {
 		return sqlSession.delete("guestbook.delete", map);	
 	}
 	
+	public int delete( GuestBookVo vo ) {
+		return sqlSession.delete( "guestbook.delete2", vo );
+	}
+
+	public List<GuestBookVo> findAll(Long startNo) {
+			return sqlSession.selectList("guestbook.findAllByNo" , startNo);
+	}
+	
 	/*
 	public Boolean delete(GuestBookVo vo) {
 		Boolean result = false;
