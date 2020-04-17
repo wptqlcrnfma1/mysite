@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -17,9 +17,9 @@
 			<div id="content">
 				<div id="site-introduction">
 					<img id="profile" src="${pageContext.request.contextPath }/${siteVo.profile }" style = "width:200px">
-					<h2>${siteVo.title }</h2>
+					<h2>${siteVo.welcomeMessage }</h2>
 					<p>
-						${siteVo.welcomeMessage }<br><br>
+						${siteVo.description }<br><br>
 						<a href="${pageContext.request.contextPath}/guestbook">방명록</a>에 글 남기기<br>
 					</p>
 				</div>
