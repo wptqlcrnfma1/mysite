@@ -34,4 +34,11 @@ public class GuestBookService {
 		return "redirect:/";
 	}
 	
+	public boolean deleteMessage(Long no, String password) {
+		return 1 == guestbookRepository.delete( new GuestBookVo(no, password) );
+	}
+	
+	public List<GuestBookVo> getMessageList(Long startNo) {
+		return guestbookRepository.findAll(startNo);
+	}
 }

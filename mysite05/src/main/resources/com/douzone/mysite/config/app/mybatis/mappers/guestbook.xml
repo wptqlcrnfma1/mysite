@@ -2,15 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="guestbook">
-	
-	<select id="findAll" parameterType="list" resultType="guestbookvo">
+
+	<select id="findAll" parameterType="list"
+		resultType="guestbookvo">
 		<![CDATA[
 			select no, name, contents, password, reg_date from guestbook order by no desc
 		]]>
 	</select>
-	<!-- 동적쿼리가 아닐때는 #{asdasda}(아무 값)을 써도 상관없지만  -->
-	<!-- 동적쿼리에서 조건절을 쓸때 객체가 넘어오면 #{속성필드}는 상관없지만 객체가 아닌 값이 넘어올때는 _parameter를 꼭 쓴다. -->
-	<select id="findAll2" parameterType="guestbookvo" resultType="Long">
+	<!-- 동적쿼리가 아닐때는 #{asdasda}(아무 값)을 써도 상관없지만 -->
+	<!-- 동적쿼리에서 조건절을 쓸때 객체가 넘어오면 #{속성필드}는 상관없지만 객체가 아닌 값이 넘어올때는 _parameter를 
+		꼭 쓴다. -->
+	<select id="findAll2" parameterType="guestbookvo"
+		resultType="Long">
 		<![CDATA[
 			select no, name, contents, password, reg_date
 			 from guestbook 
@@ -21,18 +24,44 @@
 			limit 0,3
 		]]>
 	</select>
+
+
+	<select id="findAllByNo" parameterType="long"
+		resultType="guestbookvo">
+		<![CDATA[
+			select no, name, contents, password, reg_date from guestbook
+		]]>
+		<if test="_parameter > 0"> <!-- 동적쿼리의 파라미터 밑에조건문에는 no를 써도 상관없지만 넘어오는값에서는 _parameter-->
+		<![CDATA[
+			where no < #{_parameter}
+		]]>
+		</if>
+		<![CDATA[
+			 order by no desc
+			 limit 0,3
+		]]>
 	
+	</select>
+
 	<insert id="insert" parameterType="guestbookvo">
 		<![CDATA[
   			insert into guestbook values(null, #{name}, #{contents}, #{password}, now())
 		]]>
 
-	</insert>	
-	
+	</insert>
+
 	<delete id="delete" parameterType="map">
 		<![CDATA[
 		delete from guestbook where no = #{no} and password = #{password}
 		]]>
+	</delete>
+	
+	<delete id="delete2" parameterType="guestbookvo">
+		<![CDATA[
+		delete 
+		  from guestbook 
+		 where no = #{no } and password = #{password }
+		]]>	
 	</delete>
 
 </mapper>
